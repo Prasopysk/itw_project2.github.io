@@ -12,7 +12,7 @@ body.dark-mode{
   --text-main: #caf0f8;
   --secondary-color: #283618;
   --nav-color:rgba(11, 41, 51, 0.95);
-  --main-color: #03045e;
+  --main-color: #031019be;
 }
 /*COLORS AND VARIABLES*/
 
@@ -216,3 +216,108 @@ main{
 }
 
 /**********SECTION BASIC INFO***********/
+
+.content-card {
+    max-width: 800px;
+    margin: 4rem auto;
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Rozvržení fotek a faktů */
+.info-header {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap; /* Pro mobily */
+    margin-bottom: 2rem;
+}
+
+.image-box {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.image-box img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 3px solid white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.image-box img:hover {
+    transform: scale(1.1) rotate(3deg);
+}
+
+.stats-box {
+    flex: 1;
+    min-width: 200px;
+}
+
+.stats-list {
+    list-style: none;
+    padding: 0;
+}
+
+.stats-list li {
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    color: #444;
+}
+
+/* Bio text */
+.bio-text p {
+    line-height: 1.6;
+    font-size: 1.15rem;
+    color: #333;
+    border-left: 4px solid #007bff;
+    padding-left: 1rem;
+}
+
+/* Plovoucí tagy */
+.floating-tags {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+}
+
+.tag {
+    background: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    font-weight: bold;
+    color: #007bff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    cursor: default;
+    transition: all 0.3s ease;
+    animation: float 4s ease-in-out infinite; /* Animace */
+}
+
+.tag:hover {
+    background: #007bff;
+    color: white;
+    transform: translateY(-5px) scale(1.1);
+}
+
+/* Definice vznášení */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Dark Mode úprava */
+body.dark-mode .content-card {
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+}
+body.dark-mode .stats-list li, 
+body.dark-mode .bio-text p { color: #ddd; }

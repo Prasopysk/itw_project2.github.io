@@ -60,3 +60,15 @@ window.addEventListener('scroll', () => {
     //     cloud.style.opacity = newOpacity;
     // });
 });
+
+const tags = document.querySelectorAll('.tag');
+
+tags.forEach((tag, index) => {
+    // Každému tagu dáme trochu jiné zpoždění animace, aby se hýbaly organicky
+    const randomDelay = Math.random() * 2;
+    tag.style.animationDelay = `${randomDelay}s`;
+    
+    // Volitelně: každému tagu dáme trochu jinou rychlost
+    const randomDuration = 3 + Math.random() * 2;
+    tag.style.animationDuration = `${randomDuration}s`;
+});
