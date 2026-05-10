@@ -222,7 +222,7 @@ header{
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh; /* Rozptyl mraků po celé výšce úvodní obrazovky */
+    height: 100vh;
     overflow: hidden;
     pointer-events: none;
     z-index: -1;
@@ -231,7 +231,8 @@ header{
 .cloud {
     position: absolute;
     opacity: 0.6;
-    transition: transform 0.5s ease-out; /* Pro plynulé usazení */
+    transition: transform 0.5s ease-out;
+    pointer-events: none;
 }
 
 
@@ -453,7 +454,6 @@ h2{
 .timeline-item:nth-child(even) { left: 50%; }
 .timeline-item:nth-child(even)::after { left: -14px; }
 
-/* Samotný textový obsah */
 .timeline-content {
     padding: 1.5rem;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -475,13 +475,11 @@ h2{
     line-height: 1.6;
 }
 
-/* --- RESPONSIVNÍ DESIGN (Pro šířku menší než 768px) --- */
 @media screen and (max-width: 768px) {
     .timeline::after {
         left: 100%;
     }
 
-    /* Bloky zaberou celou šířku a jsou jen nalevo */
     .timeline-item {
         width: 100%;
         padding-left: 0;
@@ -494,7 +492,6 @@ h2{
         right: -14px !important;
     }
     
-    /* Vizuální úprava textu na mobilu pro lepší návaznost na čáru vpravo */
     .timeline-content {
         text-align: right; 
     }
@@ -642,8 +639,8 @@ h2{
     margin: 15px 0;
 }
 
-.down { color: #ff4500; } /* Oranžová pro úder dolů */
-.up { color: #2ecc71; }   /* Zelená pro úder nahoru */
+.down { color: #ff4500; } 
+.up { color: #2ecc71; }   
 
 .chord-examples{
     display: flex;
@@ -701,14 +698,13 @@ h2{
     color: red;
 }
 .chords-menu span.active {
-    background-color: #e63e00; /* Oranžová barva */
+    background-color: #e63e00;
     color: white;
     font-weight: bold;
     border: 1px solid #b33000;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-/* Hover efekt pro neaktivní tlačítka */
 .chords-menu span:hover:not(.active) {
     background-color: #f0f0f0;
     cursor: pointer;
@@ -723,12 +719,15 @@ h2{
     line-height: 50px;
 }
 
-/******************************Trip******************************/
+
+/********************SECTION - GUITAR*********************/
+
+/******************************TRIP******************************/
 #trip {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    margin-top: 4rem; /* Odstup od předchozí sekce */
+    margin-top: 4rem;
 }
 
 #trip h2 {
@@ -747,7 +746,6 @@ h2{
     border-radius: 12px;
 }
 
-/* Levý panel */
 #trip-info {
     display: flex;
     flex-direction: column;
@@ -784,31 +782,28 @@ h2{
     line-height: 1.6;
 }
 
-/* Pravý panel - Kontejner mapy (Klíčové pro ořez a plynulost) */
 #trip-map-container {
     width: 100%;
-    aspect-ratio: 4 / 3; /* Udrží stálý poměr stran */
-    overflow: hidden;    /* Ořízne mapu, když se přiblíží (vyzoomuje) */
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
     border-radius: 8px;
     border: 2px solid var(--nav-color);
     position: relative;
-    background-color: #e5e5e5; /* Záložní barva, kdyby se mapa nenačetla */
+    background-color: #e5e5e5;
 }
 
 #trip-map {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* Transform je to, co dělá ten plynulý pohyb! */
     transition: transform 1.5s ease-in-out; 
     transform-origin: center center;
 }
 
-/* Responzivita - od 768px bude mapa vpravo a text vlevo */
 @media (min-width: 768px) {
     .trip-grid {
         display: grid;
-        grid-template-columns: 1fr 2fr; /* Text zabere 1 díl, mapa 2 díly */
+        grid-template-columns: 1fr 2fr;
         align-items: center;
     }
 }
@@ -850,8 +845,6 @@ h2{
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
 }
 
-/* Interaktivní státy v mapě */
-/* Společné vlastnosti pro interaktivní státy */
 #German_Empire, #AustroHungarian_Empire, #French_Republic, 
 #United_Kingdom_of_Great_Britain_and_Ireland, #Russian_Empire, 
 #Ottoman_Empire, #Spain, #Belgium, #Kingdom_of__the_Netherlands, 
@@ -861,35 +854,33 @@ h2{
     transition: var(--transition);
 }
 
-#German_Empire:hover { fill: #808080 !important; } /* Šedá */
-#AustroHungarian_Empire:hover { fill: #b36666 !important; } /* Červenohnědá */
-#French_Republic:hover { fill: #4169e1 !important; } /* Královská modř */
-#United_Kingdom_of_Great_Britain_and_Ireland:hover { fill: #d62828 !important; } /* Britská červená */
-#Russian_Empire:hover { fill: #2d6a4f !important; } /* Tmavě zelená */
-#Ottoman_Empire:hover { fill: #606c38 !important; } /* Olivově zelená */
-#Spain:hover { fill: #f9c74f !important; } /* Žlutá/Zlatá */
-#Belgium:hover { fill: #e9c46a !important; } /* Okrová */
-#Kingdom_of__the_Netherlands:hover { fill: #f4a261 !important; } /* Oranžová */
-#Kingdom_of_Italy:hover { fill: #2a9d8f !important; } /* Tyrkysově zelená */
-#Switzerland:hover { fill: #e5e5e5 !important; } /* Neutrální světle šedá */
-#Kingdom_of_Romania:hover { fill: #9b5de5 !important; } /* Nachová/Fialová */
-#Serbia:hover { fill: #00b4d8 !important; } /* Světle modrá */
-#Kingdom_of_Bulgaria:hover { fill: #bc6c25 !important; } /* Hnědá */
-#Kingdom_of_Greece:hover { fill: #0077b6 !important; } /* Mořská modř */
+#German_Empire:hover { fill: #808080 !important; } 
+#AustroHungarian_Empire:hover { fill: #b36666 !important; }
+#French_Republic:hover { fill: #4169e1 !important; } 
+#United_Kingdom_of_Great_Britain_and_Ireland:hover { fill: #d62828 !important; }
+#Russian_Empire:hover { fill: #2d6a4f !important; } 
+#Ottoman_Empire:hover { fill: #606c38 !important; } 
+#Spain:hover { fill: #f9c74f !important; } 
+#Belgium:hover { fill: #e9c46a !important; }
+#Kingdom_of__the_Netherlands:hover { fill: #f4a261 !important; }
+#Kingdom_of_Italy:hover { fill: #2a9d8f !important; }
+#Switzerland:hover { fill: #e5e5e5 !important; }
+#Kingdom_of_Romania:hover { fill: #9b5de5 !important; }
+#Serbia:hover { fill: #00b4d8 !important; } 
+#Kingdom_of_Bulgaria:hover { fill: #bc6c25 !important; }
+#Kingdom_of_Greece:hover { fill: #0077b6 !important; } 
 
-/* Snížení opacity pro všechny při hoveru pro efekt "rozsvícení" */
 #map-container path:hover {
     opacity: 0.9;
 }
 
-/* Třída pro stát právě vybraný v JavaScriptu */
 path.selected {
     fill: var(--text-main) !important;
     stroke: var(--background-color);
     stroke-width: 1.5px;
 }
 
-/* Informační panel */
+/* INFO PANEL */
 #country {
     background-color: var(--main-color);
     color: var(--text-main);
@@ -913,7 +904,6 @@ path.selected {
     display: none; 
 }
 
-/* Obrázek se ukáže, až když mu JS přiřadí zdroj */
 #country-img[src]:not([src=""]) {
     display: block;
 }
@@ -929,7 +919,6 @@ path.selected {
     line-height: 1.6;
 }
 
-/* Responzivita: Na tabletech a PC se mapa a panel dají vedle sebe */
 @media (min-width: 768px) {
     #history {
         display: grid;

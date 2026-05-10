@@ -112,7 +112,6 @@ E|-0-0-1-2---2---2-1-0-----0-0-----0-1-2----|`
 
 let currentIndex = 0;
 
-// 2. Funkce pro vykreslení teček
 function createDots() {
     const container = document.getElementById('dots-container');
     container.innerHTML = "";
@@ -120,13 +119,12 @@ function createDots() {
         const dot = document.createElement('span');
         dot.innerHTML = "●";
         dot.style.margin = "0 5px";
-        dot.style.color = index === currentIndex ? "#333" : "#ccc"; // Aktivní vs neaktivní ///asdasdadadasdad  PROBLEM
+        dot.style.color = index === currentIndex ? "#333" : "#ccc";
         dot.style.fontSize = "12px";
         container.appendChild(dot);
     });
 }
 
-// 3. Funkce pro změnu tabu
 function updateTab() {
     const song = tabsData[currentIndex];
     document.getElementById('song-link').innerText = song.title;
@@ -145,6 +143,8 @@ function changeTab(direction) {
 createDots(); //inicialization when loaded
 
 // TABULATOR SWITCHER //////////////////////////////////////////////////////////
+
+// CHORD VIEWER //////////////////////////////////////////////////////////
 
 const chordData = [
     {
@@ -311,22 +311,16 @@ const chordData = [
     }
 ];
 
-// 1. Najdeme si prvky v HTML
 const menuItems = document.querySelectorAll('.chords-menu span');
 const textDisplay = document.querySelector('.chords-text');
 
-// 2. Přidáme "posluchače" na každé tlačítko v menu
 menuItems.forEach((item, index) => {
     item.addEventListener('click', () => {
         
-        // A. Odstraníme třídu 'active' ze všech tlačítek
         menuItems.forEach(btn => btn.classList.remove('active'));
         
-        // B. Přidáme třídu 'active' na to, na které jsme klikli
         item.classList.add('active');
         
-        // C. Změníme HTML obsah v .chords-text podle dat z pole
-        // (Používáme index, protože pořadí v HTML odpovídá pořadí v chordData)
         if (chordData[index]) {
             textDisplay.innerHTML = chordData[index].content;
         } else {
@@ -335,12 +329,14 @@ menuItems.forEach((item, index) => {
     });
 });
 
-// 3. Volitelné: Nastavení první písničky jako výchozí při načtení
 window.addEventListener('DOMContentLoaded', () => {
     menuItems[0].classList.add('active');
 });
 
-// Prototyp dat s 6 fázemi
+// CHORD VIEWER //////////////////////////////////////////////////////////
+
+// TRIP TO SCHOOL //////////////////////////////////////////////////////////
+
 const tripPhases = [
     {
         title: "1. 'Chůze' na vlak",
@@ -392,17 +388,14 @@ const tripPhases = [
     }
 ];
 
-// Odkazy na HTML elementy
 const trip_btn = document.getElementById('trip-btn');
 const trip_title = document.getElementById('trip-title');
 const desc = document.getElementById('trip-desc');
 const mapImg = document.getElementById('trip-map');
 
-// Proměnná pro sledování aktuální fáze
-let currentPhaseIndex = -1; // Začíná na -1 (úvodní obrazovka)
+let currentPhaseIndex = -1; 
 
 trip_btn.addEventListener('click', () => {
-    // Posun na další fázi, pokud jsme na konci, vrátí se na nulu
     currentPhaseIndex++;
     if (currentPhaseIndex >= tripPhases.length) {
         currentPhaseIndex = 0;
@@ -410,12 +403,10 @@ trip_btn.addEventListener('click', () => {
 
     const currentData = tripPhases[currentPhaseIndex];
 
-    // Změna textů
     trip_title.innerText = currentData.title;
     desc.innerText = currentData.desc;
     trip_btn.innerText = currentData.btnText;
 
-    // Aplikace CSS transformace pro animaci mapy
     mapImg.style.transform = `scale(${currentData.scale}) translate(${currentData.x}, ${currentData.y})`;
 });
 
@@ -423,11 +414,11 @@ trip_btn.addEventListener('click', () => {
 
 
 
-
+// HISTORY MAP //////////////////////////////////////////////////////////
 
 const countryData = [
     {
-        id: 'German_Empire', // Doporučuji přidat ID pro snadné párování s SVG
+        id: 'German_Empire',
         title: 'Německá říše',
         image: 'img/flags/germany-flag.png',
         descrip: 'Průmyslová a vojenská velmoc pod vedením císaře Viléma II. Hlavní spojenec Rakouska-Uherska a tvůrce Schlieffenova plánu. Disponovalo nejmodernější armádou a ambicemi ovládnout kontinent i světová moře.'
@@ -530,11 +521,9 @@ fetch('img/europe_map.svg')
         const mapContainer = document.getElementById('map-container');
         mapContainer.innerHTML = svgData;
 
-        // Oprava: Najdeme cesty (státy) uvnitř kontejneru
         const paths = mapContainer.querySelectorAll('path');
 
         paths.forEach(path => {
-            // Nastavíme kurzor hned, aby uživatel věděl, že je to klikací
             if(countryData.find(c => c.id === path.id)) {
                 path.style.cursor = 'pointer';
             }
@@ -545,7 +534,7 @@ fetch('img/europe_map.svg')
                 if (data) {
                     titleEl.innerText = data.title;
                     descEl.innerText = data.descrip;
-                    flagImg.src = data.image; // JavaScriptem měníme src
+                    flagImg.src = data.image;
                     flagImg.alt = data.title;
 
                     paths.forEach(p => p.classList.remove('selected'));
