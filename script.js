@@ -31,18 +31,38 @@ themeButton.addEventListener('click', () => { //dark mode toggle
 });
 
 
-const mainElement = document.querySelector('main');
-const clouds = document.querySelectorAll('.cloud');
+// CLOUDS //////////////////////////////////////////////////////////
 
-window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    const mainTop = mainElement.offsetTop;
-    
-    clouds.forEach((cloud, index) => {
-        const speed = (index + 1) * 0.05; // Different speeds for each cloud
-        cloud.style.transform = `translateY(${scrollY * speed}px)`;
-    });
-});
+window.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector('.cloud-background');
+    const cloudTypes = ['img/cloud1.png', 'img/cloud2.png', 'img/cloud3.png'];
+    const numberOfClouds = 120;
+
+    for (let i = 0; i < numberOfClouds; i++) {
+        const cloud = document.createElement('img');
+        
+        cloud.src = cloudTypes[Math.floor(Math.random() * cloudTypes.length)];
+        cloud.className = 'cloud';
+
+        const top = Math.random() * 100;
+        const left = Math.random() * 90;
+
+        const width = Math.random() * 12 + 15;
+        
+        const opacity = Math.random() * 0.4;
+
+        Object.assign(cloud.style, {
+            top: `${top}%`,
+            left: `${left}%`,
+            width: `${width}rem`,
+            opacity: opacity,
+            filter: `blur(${Math.random() * 2}px)`,
+            transform: `scaleX(${Math.random() > 0.5 ? 1 : -1})`
+        });
+
+        container.appendChild(cloud);
+    }
+}); 
 
 const btn = document.querySelector('#hamburger-btn');
 const menu = document.querySelector('#hamburger-menu');
@@ -52,7 +72,7 @@ btn.addEventListener('click', () => {
     menu.classList.toggle('active');
     body.classList.toggle('no-scroll');
 });
-
+// CLOUDS //////////////////////////////////////////////////////////
 
 // TABULATOR SWITCHER //////////////////////////////////////////////////////////
 
@@ -320,6 +340,90 @@ window.addEventListener('DOMContentLoaded', () => {
     menuItems[0].classList.add('active');
 });
 
+// Prototyp dat s 6 fázemi
+const tripPhases = [
+    {
+        title: "1. 'Chůze' na vlak",
+        desc: "Nejotravnější část cesty - obvykle to totiž není chůze, ale běh",
+        x: "-5%",
+        y: "-44%",
+        scale: "12",
+        btnText: "Nastoupit na vlak ➔"
+    },
+    {
+        title: "2. Jízda do Krpole",
+        desc: "Celej zadejchanej nastoupim do toho vlaku, který nakonec měl 10 minut zpoždění a stejně jsem tudíž čekal chvíli na nádru. Ty nový vlaky jsou ale fajn, hezky se v nich dělají na poslední chvíli věci do školy",
+        x: "0%",
+        y: "-35%",
+        scale: "6",
+        btnText: "Příjezd do Krpole ➔"
+    },
+    {
+        title: "3. Konečně na fakultu",
+        desc: "Fakulta FITu je v hezkém prostoru bývalého kláštěra kousek od nádraží",
+        x: "0%",
+        y: "5%",
+        scale: "1.3",
+        btnText: "Učení ➔"
+    },
+    {
+        title: "4. Škola",
+        desc: "",
+        x: "2%",
+        y: "38%",
+        scale: "10",
+        btnText: "Domůůů ➔"
+    },
+    {
+        title: "5. Zpatky jedu stejně",
+        desc: "Docela repetetivní, jedu zase vlakem",
+        x: "0%",
+        y: "5%",
+        scale: "1.3",
+        btnText: "Snažit se 30 minut neusnout ve vlaku... ➔"
+    },
+    {
+        title: "6. Pěší přesun",
+        desc: "A zase pjecha ty 2 km přes celé Modřice (občas si to ale zkrátím busem)",
+        x: "0%",
+        y: "-35%",
+        scale: "6",
+        btnText: "Dojít domů, usnout a jít znovu ➔"
+    }
+];
+
+// Odkazy na HTML elementy
+const trip_btn = document.getElementById('trip-btn');
+const trip_title = document.getElementById('trip-title');
+const desc = document.getElementById('trip-desc');
+const mapImg = document.getElementById('trip-map');
+
+// Proměnná pro sledování aktuální fáze
+let currentPhaseIndex = -1; // Začíná na -1 (úvodní obrazovka)
+
+trip_btn.addEventListener('click', () => {
+    // Posun na další fázi, pokud jsme na konci, vrátí se na nulu
+    currentPhaseIndex++;
+    if (currentPhaseIndex >= tripPhases.length) {
+        currentPhaseIndex = 0;
+    }
+
+    const currentData = tripPhases[currentPhaseIndex];
+
+    // Změna textů
+    trip_title.innerText = currentData.title;
+    desc.innerText = currentData.desc;
+    trip_btn.innerText = currentData.btnText;
+
+    // Aplikace CSS transformace pro animaci mapy
+    mapImg.style.transform = `scale(${currentData.scale}) translate(${currentData.x}, ${currentData.y})`;
+});
+
+
+
+
+
+
 
 const countryData = [
     {
@@ -431,7 +535,9 @@ fetch('img/europe_map.svg')
 
         paths.forEach(path => {
             // Nastavíme kurzor hned, aby uživatel věděl, že je to klikací
-            path.style.cursor = 'pointer';
+            if(countryData.find(c => c.id === path.id)) {
+                path.style.cursor = 'pointer';
+            }
 
             path.addEventListener('click', () => {
                 const data = countryData.find(c => c.id === path.id);
@@ -442,10 +548,10 @@ fetch('img/europe_map.svg')
                     flagImg.src = data.image; // JavaScriptem měníme src
                     flagImg.alt = data.title;
 
-                    // Pokud chceš zvýrazňovat vybraný stát, odkomentuj toto:
-                    // paths.forEach(p => p.classList.remove('selected'));
-                    // path.classList.add('selected');
+                    paths.forEach(p => p.classList.remove('selected'));
+                    path.classList.add('selected');
                 }
+                
             });
         });
     })
